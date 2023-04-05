@@ -1,0 +1,84 @@
+#Functions
+
+#Built in Function
+
+print(seq(28,40))
+
+print(mean(25:82))
+
+print(sum(41:68))
+
+#User Defined Functions
+# Create a function to print squares of numbers in sequence.
+Myfunction <- function(a) {
+  for(i in 1:a) {
+    b <- i^2
+    print(b)
+  }
+}
+Myfunction(6)
+
+#Create Function without Argument
+
+Myfunction <- function() {
+  for(i in 1:5) {
+    print(i^2)
+  }
+}
+Myfunction()
+
+# Create a function with arguments.
+Myfunction2 <- function(a,b,c) {
+  result <- a * b + c
+  print(result)
+}
+
+# Call the function by position of arguments.
+Myfunction2(5,3,11)
+
+# Call the function by names of the arguments.
+Myfunction2(a = 11, b = 5, c = 3)
+
+#Create a function with arguments
+Myfunction <- function(a = 3, b = 6) {
+  result <- a * b
+  print(result)
+}
+
+#Call the function without giving any argument
+Myfunction()
+
+# Call the function with giving new values of the argument.
+Myfunction(9,5)
+
+#Lazy Evaluation of Function
+# Create a function with arguments.
+Myfunction=function(a,b){
+  print(a^2)
+  print(a)
+  print(b)
+}
+
+# Evaluate the function without supplying one of the arguments.
+Myfunction(6)
+#List Objects
+ls()
+#remove Objects
+rm(a)
+#print msg 
+cat("The class of our object is",class(M))
+M
+
+data=read.csv("C:/Users/Fingertips/Desktop/Wine Dataset.csv", header=FALSE)
+
+View(data)
+#Getwd
+getwd()
+data5=read.csv("C:/Users/Fingertips/Desktop/bank_data_fingertips.csv")
+data5
+View(data5)
+library(readxl)
+
+
+data6=read.csv("C:/Users/Fingertips/Desktop/Flight Fare Prediction.csv")
+View(data6)

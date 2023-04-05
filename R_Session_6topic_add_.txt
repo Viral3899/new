@@ -1,0 +1,210 @@
+#Machine learning
+#x=independent variable(pridector) , y=dependent variable (target)
+x= c(151,174,138,186,128,136,179,163,152,131)
+y= c(63,81,56,91,47,57,76,72,62,48)
+
+
+model=lm(y~x)
+
+print(model)
+
+plot(x,y,col="blue")
+abline(model,col="red")
+
+summary(model)
+
+#prediction
+a=data.frame(x=c(170,134))
+result=predict(model,a)
+print(result)
+
+cat("weight =",as.integer(result))
+
+cor(x,y)
+cat("There is strong positive correlation between height and weight ",cor(x,y))
+
+#multi-regression
+View(mtcars)
+data1=mtcars
+
+input=mtcars[,c("mpg","disp","hp","wt")]
+
+model1=lm(mpg~.,data1)
+
+
+View(input)
+model=lm(mpg~disp+hp+wt,data = input)
+model=lm(mpg~disp+hp+wt,input)
+print(model)
+summary(model)
+
+a=data.frame(disp=150,hp=92,wt=1.91)
+result=predict(model,a)
+cat("mileage:-",result)
+
+ b=max(mtcars$mpg)
+View(b)
+
+data_1 =subset(mtcars,select = c(0,mpg))
+data_1
+
+#Prediction of Winpoints in PubG
+
+#Set working directory 
+
+setwd("D:/Fingertips_Shalini/Desktop/Data Files")
+
+#Load the file
+data=read.csv("pubg_data.csv")
+str(data)
+View(data)
+View(data)
+ncol(data)
+nrow(data)
+
+#Drop ID Column
+newdata <- data[-1]
+View(newdata)
+names(newdata)
+
+
+a=drop(c(data$assists,data$boosts))
+b=d
+names(a)
+
+#Check number of col and number row
+ncol(newdata)
+nrow(newdata)
+str(newdata)
+dim(newdata)
+
+#To check missing values in data
+na.fail(data)
+
+# Selection
+
+#install and load
+
+library(FSelector)
+
+#link
+
+#Gain Ratio
+gain = gain.ratio(winPoints~., newdata)
+View(gain)
+
+mydata=data[1:1000,1:25]
+gain=subset(gain,attr_importance > 0.01)
+View(gain)
+names(gain)
+nm = row.names(gain)
+nm
+names(mydata[,nm])
+
+#Gain
+n =ncol(mydata[,nm])
+n
+
+f <- as.formula(paste("winPoints~", paste(names(newdata[,nm]),collapse="+")))
+f
+#Multiple Regression
+
+View(mydata)
+model2 <- lm(f,mydata)
+print(model2)
+summary(model)
+
+#prediction
+
+a=data.frame(killPoints=1065,maxPlace=40, numGroups=46, winPlacePerc=0.3241)
+result=predict(model,a)
+print(result)
+cat("winpoints:-",result)
+
+#classification
+#rpart :- for decision tree
+#rose :-  package for classification
+install.packages("ROSE")
+library(ROSE)
+install.packages("rpart")
+library(rpart)
+install.packages("rpart.plot")
+library(rpart.plot)
+
+data(hacide)
+hacide.train
+hacide.test
+View(hacide.train)
+dim(hacide.train)
+View(hacide.test)
+dim(hacide.test)
+nrow(hacide.train)
+nrow(hacide.test)
+
+#data(hacide)
+#Train data
+View(as.data.frame(hacide.train))
+table(hacide.train$cls)
+
+#probability
+prop.table(table(hacide.train$cls))
+
+#Test Data
+View(as.data.frame(hacide.test))
+table(hacide.test$cls)
+prop.table(table(hacide.test$cls))
+
+
+#decision tree
+treeimb = rpart(cls~x2+x1,data=hacide.train)
+rpart.plot(treeimb)
+print(treeimb)
+summary(treeimb)
+
+table(hacide.train$cls,predict(treeimb, type = "class"))
+pre=predict(treeimb,newdata = hacide.test,type = "class")
+
+#predicted class
+
+View(pre)
+table(hacide.test$cls,pre)
+
+
+pre=predict(treeimb,newdata = hacide.test,type = "class")
+
+
+#predicted class=0  expected loss=0.02  P(node) =1
+#20/1000=0.02
+
+#Node number 2: 989 observations
+#predicted class=0  expected loss=0.01011122
+#9/980=0.0091=0.01
+
+rpart.plot(treeimb)
+summary(hacide.train)
+summary(treeimb)
+
+
+table(hacide.train$cls, predict(treeimb, type = "class"))
+
+
+
+predtr <- predict(treeimb, hacide.test, type = "class")
+View(predtr)
+
+table(predtr)
+
+
+#Out of 5 it recignize 1
+#1/5=0.20=precision
+
+
+#multi classification
+data("iris")
+head(iris)
+str(iris)
+table(iris$Species)
+tree=rpart(Species~Petal.Length+Petal.Width,data=iris,method ="class")
+
+rpart.plot(tree)
+summary(tree)
